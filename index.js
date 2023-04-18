@@ -134,8 +134,8 @@ app.put('/post/:id', upload.single('image'), async (req, res) => {
     })
 })
 
-app.get('/profile', (req, res) => {
-    const { token } = req.cookies;
+app.get('/profile', async (req, res) => {
+    const { token } = await req.cookies;
     jwt.verify(token, secret, {}, (err, info) => {
         if (err) throw err;
         res.json(info);
@@ -173,6 +173,10 @@ app.get('/post/:id', async (req, res) => {
 app.post('/logout', (req, res) => {
     res.cookie('token', '').json('ok');
 })
+
+// app.get('/debug', (req,res) => {
+//     res.send(req.body)
+// })
 
 app.listen(4000);
 
