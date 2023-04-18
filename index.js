@@ -14,7 +14,7 @@ const fs = require('fs')
 const salt = bcrypt.genSaltSync(10);
 const secret = 'jijsidfjisdfjisfj';
 
-app.use(cors({ credentials: true, origin: 'https://blogin77.vercel.app' }));
+app.use(cors({ credentials: true}));
 app.use(express.json());
 app.use(cookieParser());
 
