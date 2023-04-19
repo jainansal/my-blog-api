@@ -93,7 +93,7 @@ app.post('/new-post', upload.single('image'), async (req, res) => {
     })
 })
 
-app.get('post', async (req, res) => {
+app.get('/post', async (req, res) => {
     res.json(await Post.find()
         .populate('author', ['username'])
         .sort({ createdAt: -1 })
