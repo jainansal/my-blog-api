@@ -14,14 +14,14 @@ const fs = require('fs')
 const salt = bcrypt.genSaltSync(10);
 const secret = 'jijsidfjisdfjisfj';
 
-app.use(cors({ credentials: true, origin: 'https://blogin77.vercel.app'}));
+app.use(cors({ credentials: true, origin: 'https://blogin77.vercel.app/'}));
 app.use(express.json());
 app.use(cookieParser());
 
 app.use('/uploads', express.static(__dirname + '/uploads'));
 
 const connectUrl = 'mongodb+srv://blog:zTfFFYCaI4xdCKcn@cluster0.3sh9cxr.mongodb.net/?retryWrites=true&w=majority';
-mongoose.connect(connectUrl);
+await mongoose.connect(connectUrl);
 
 app.post('/register', async (req, res) => {
     const { username, password } = req.body;
@@ -76,7 +76,6 @@ app.post('/new-post', upload.single('image'), async (req, res) => {
         newPath = path + '.' + ext;
         fs.renameSync(path, newPath);
     }
-
     const { token } = req.cookies;
     console.log(req.cookies);
     jwt.verify(token, secret, {}, async (err, info) => {
@@ -94,7 +93,7 @@ app.post('/new-post', upload.single('image'), async (req, res) => {
     })
 })
 
-app.get('/post', async (req, res) => {
+app.get('post', async (req, res) => {
     res.json(await Post.find()
         .populate('author', ['username'])
         .sort({ createdAt: -1 })
