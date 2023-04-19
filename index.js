@@ -135,10 +135,15 @@ app.put('/post/:id', upload.single('image'), async (req, res) => {
 
 app.get('/profile', async (req, res) => {
     const { token } = await req.cookies;
-    jwt.verify(token, secret, {}, (err, info) => {
-        if (err) throw err;
-        res.json(info);
-    })
+    if(token) {
+        jwt.verify(token, secret, {}, (err, info) => {
+            if (err) throw err;
+            res.json(info);
+        })
+    } else {
+        res.send(null);
+    }
+    
 })
 
 app.get('/delete/:id', async (req, res) => {
